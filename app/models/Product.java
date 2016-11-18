@@ -1,18 +1,34 @@
 package models;
 
-public class Product {
+import java.util.*;
+import javax.persistence.*;
+
+import play.data.format.*;
+import play.data.validation.*;
+
+import com.avaje.ebean.*;
+
+@Entity
+public class Product extends Model {
 
 	//Properties
-	Private Long id;
-	Private String name;
-	Private String description;
-	Private int stock;
-	Private double price;
+	@Id
+	private Long id;
+
+	@Constraints.Required
+	private String name;
+	
+	@Constraints.Required
+	private String description;
+
+	@Constraints.Required
+	private int stock;
+
+	@Constraints.Required
+	private double price;
 	
 	//Default constructor
-	Public Product()
-	{		
-
+	public Product(){		
 	}
 
 	//Constructor to inititalise
@@ -25,17 +41,63 @@ public class Product {
 		this.price = price;		
 	}
 
+	//Generic query helper for entity Computer with id long
+	public static Finder<Long,Product> find = new Finder<Long,Product>(Product.class);
+
+	//Find all Products in the database
+	//Filter Product name
+	public static List<Product> findAll()
+	{
+		return Product.find.all();
+	}
+
 	public Long getId()
 	{
 		return id;
 	}
 
-	public void setId()
+	public void setId(Long idIn)
 	{
-		this.id = id;
+		id = idIn;
 	}
 
-	public Long getName()
+	public String getName()
 	{
 		return name;
 	}
+
+	public void setName(String nameIn)
+	{
+		name = nameIn;
+	}
+
+	public String getDescription()
+	{
+		return description;
+	}
+
+	public void setDescription(String desc)
+	{
+		description = desc;
+	}
+
+	public int getStock()
+	{
+		return stock;
+	}
+
+	public void setStock(int stk)
+	{
+		stock = stk;
+	}
+
+	public double getPrice()
+	{
+		return price;
+	}
+
+	public void setPrice(double p)
+	{
+		price = p;
+	}
+}
